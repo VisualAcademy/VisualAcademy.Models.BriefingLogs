@@ -100,4 +100,9 @@ namespace Zero.Models
         [NotMapped]
         public string? LogDetails { get; set; }
     }
+
+    public class BriefingLogModel : BriefingLog
+    { 
+        // Empty 
+    }
 }
