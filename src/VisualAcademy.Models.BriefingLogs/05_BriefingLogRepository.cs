@@ -230,7 +230,9 @@ namespace Zero.Models
 
         public async Task<ArticleSet<BriefingLog, int>> GetArticles<TParentIdentifier>(int pageIndex, int pageSize, string searchField, string searchQuery, string sortOrder, TParentIdentifier parentIdentifier)
         {
-            var items = _context.BriefingLogs.Select(m => m); // 메서드 구문(Method Syntax)
+            // 브리핑 로그는 Close (IsPinned)된 것은 리스트에서 제거 
+            //var items = _context.BriefingLogs.Select(m => m); // 메서드 구문(Method Syntax)
+            var items = _context.BriefingLogs.Where(bl => bl.IsPinned != true).Select(m => m); // 메서드 구문(Method Syntax)
 
             // ParentBy 
             if (parentIdentifier is int parentId && parentId != 0)
@@ -279,6 +281,24 @@ namespace Zero.Models
                 case "TitleDesc":
                     items = items.OrderByDescending(m => m.Title);
                     break;
+                case "Status":
+                    items = items.OrderBy(m => m.IsPinned);
+                    break;
+                case "StatusDesc":
+                    items = items.OrderByDescending(m => m.IsPinned);
+                    break;
+                case "Created":
+                    items = items.OrderBy(m => m.Created);
+                    break;
+                case "CreatedDesc":
+                    items = items.OrderByDescending(m => m.Created);
+                    break;
+                //case "Summary":
+                //    items = items.OrderBy(m => m.Synopsis);
+                //    break;
+                //case "SummaryDesc":
+                //    items = items.OrderByDescending(m => m.Synopsis);
+                //    break;
                 default:
                     items = items.OrderByDescending(m => m.Id);
                     break;

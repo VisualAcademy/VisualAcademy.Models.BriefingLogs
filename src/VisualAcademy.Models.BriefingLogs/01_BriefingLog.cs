@@ -93,5 +93,11 @@ namespace Zero.Models
         public DateTime DateTimeStarted { get; set; }
 
         public string? Priority { get; set; }
+
+        [NotMapped]
+        public string? Synopsis { get; set; }
+
+        [NotMapped]
+        public string? LogDetails { get; set; }
     }
 }
